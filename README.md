@@ -42,7 +42,7 @@ That’s it. The action will look for a ```.repo-policy.yml``` file at the repo 
 
 ## Configuration
 
-Create a .repo-policy.yml file:
+Create a `.repo-policy.yml` file:
 
 ```yaml
 # Fail the check if violations at or above this severity exist.
@@ -52,6 +52,10 @@ fail_on: error
 # Optional per-rule severity overrides
 severity_overrides:
   required_files: warn
+  package_lock_missing: warn
+  dependency_denylist: error
+  pr_title_regex: error
+  package_lock_missing: error
 
 pull_request:
   # JavaScript RegExp (without surrounding / /)
