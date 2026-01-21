@@ -1,3 +1,9 @@
+fail_on: error   # "error" (default) or "warn" (strict mode)
+
+severity_overrides:
+  required_files: warn
+  pr_title_regex: error
+
 pull_request:
   title_regex: "^(feat|fix|chore|docs|refactor|test|ci):"
 
