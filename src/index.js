@@ -361,4 +361,17 @@ async function run() {
     }
 }
 
-run();
+if (require.main === module) {
+    run();
+}
+
+module.exports = {
+    applySeverityOverrides,
+    collectDepsFromLock,
+    compileViolations,
+    normalizeSeverity,
+    parseDenyRule,
+    readPackageLock,
+    severityRank,
+    shouldFail
+};

@@ -4,7 +4,8 @@
   "description": "Lightweight GitHub Action that enforces repository and dependency policies on pull requests.",
   "main": "index.js",
   "scripts": {
-    "build": "node scripts/build.js"
+    "build": "node scripts/build.js",
+    "test": "node --test"
   },
   "repository": {
     "type": "git",
