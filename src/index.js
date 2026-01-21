@@ -43,7 +43,7 @@ function fileExists(relPath) {
     return fs.existsSync(full);
 }
 
-function renderMarkdown({ status, violations, configPath }) {
+function renderMarkdown({ status, violations, configPath, meta }) {
     const icon = status === "pass" ? "✅" : status === "warn" ? "⚠️" : "❌";
     const title =
         status === "pass"
@@ -57,6 +57,7 @@ function renderMarkdown({ status, violations, configPath }) {
     lines.push(`### ${title}`);
     lines.push("");
     lines.push(`**Config:** \`${configPath}\``);
+    lines.push(`**Fail threshold:** \`${meta.failOn}\``);
     lines.push("");
 
     if (!violations.length) {
@@ -199,8 +200,14 @@ async function run() {
 
         const status = failing ? "fail" : hasErrors || hasWarns ? "warn" : "pass";
 
-        const body = renderMarkdown({ status, violations, configPath });
+        const failOn = config?.fail_on || "error";
 
+        const body = renderMarkdown({
+            status,
+            violations,
+            configPath,
+            meta: { failOn }
+        });
         await upsertComment(octokit, ctx, body);
 
         if (failing) core.setFailed("Repo Policy Gate failed due to policy violations.");
