@@ -1,0 +1,16 @@
+name: Repo Policy Gate
+description: Enforce lightweight repo policies on pull requests via .repo-policy.yml
+author: you
+branding:
+  icon: shield
+  color: blue
+
+inputs:
+  config_path:
+    description: Path to the policy config file
+    required: false
+    default: .repo-policy.yml
+
+runs:
+  using: node20
+  main: dist/index.js

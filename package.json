@@ -1,0 +1,25 @@
+{
+  "name": "repo-policy-gate",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "node scripts/build.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nnoribeiro/repo-policy-gate.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nnoribeiro/repo-policy-gate/issues"
+  },
+  "homepage": "https://github.com/nnoribeiro/repo-policy-gate#readme",
+  "dependencies": {
+    "@actions/core": "^2.0.2",
+    "@actions/github": "^7.0.0",
+    "js-yaml": "^4.1.1"
+  }
+}
