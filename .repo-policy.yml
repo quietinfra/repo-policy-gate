@@ -12,3 +12,7 @@ repo:
     - LICENSE
     - SECURITY.md
     - CODEOWNERS
+
+dependencies:
+  deny:
+    - left-pad

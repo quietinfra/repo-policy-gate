@@ -43,6 +43,26 @@ function fileExists(relPath) {
     return fs.existsSync(full);
 }
 
+function readPackageLock() {
+    const lockPath = path.resolve(process.cwd(), "package-lock.json");
+    if (!fs.existsSync(lockPath)) return null;
+    return JSON.parse(fs.readFileSync(lockPath, "utf8"));
+}
+
+function collectDepsFromLock(lock) {
+    const out = [];
+
+    // npm v7+ format
+    if (lock.packages) {
+        for (const [pkgPath, info] of Object.entries(lock.packages)) {
+            if (!info || !info.name || !info.version) continue;
+            out.push({ name: info.name, version: info.version });
+        }
+    }
+
+    return out;
+}
+
 function renderMarkdown({ status, violations, configPath, meta }) {
     const icon = status === "pass" ? "✅" : status === "warn" ? "⚠️" : "❌";
     const title =
@@ -168,6 +188,35 @@ function compileViolations({ config, prTitle }) {
                 message: `Missing required file(s): ${missing.map(m => `\`${m}\``).join(", ")}`,
                 howToFix: "Add the missing files at the repo root, or remove them from repo.required_files."
             });
+        }
+    }
+
+    // --- Dependency denylist rule ---
+    const denyDeps = config?.dependencies?.deny;
+    if (Array.isArray(denyDeps) && denyDeps.length) {
+        const lock = readPackageLock();
+        if (lock) {
+            const deps = collectDepsFromLock(lock);
+            const banned = [];
+
+            for (const rule of denyDeps) {
+                const [name, versionRule] = rule.split("@");
+                for (const dep of deps) {
+                    if (dep.name !== name) continue;
+                    if (!versionRule || dep.version === versionRule) {
+                        banned.push(`${dep.name}@${dep.version}`);
+                    }
+                }
+            }
+
+            if (banned.length) {
+                violations.push({
+                    ruleId: "dependency_denylist",
+                    severity: "error",
+                    message: `Disallowed dependencies found: ${banned.map(b => `\`${b}\``).join(", ")}`,
+                    howToFix: "Remove or replace the disallowed dependency, or update dependencies.deny."
+                });
+            }
         }
     }
 
