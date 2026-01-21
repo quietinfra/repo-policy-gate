@@ -52,12 +52,24 @@ function readPackageLock() {
 function collectDepsFromLock(lock) {
     const out = [];
 
-    // npm v7+ format
-    if (lock.packages) {
-        for (const [pkgPath, info] of Object.entries(lock.packages)) {
-            if (!info || !info.name || !info.version) continue;
-            out.push({ name: info.name, version: info.version });
+    if (!lock.packages) return out;
+
+    for (const [pkgPath, info] of Object.entries(lock.packages)) {
+        if (!info || !info.version) continue;
+
+        let name = info.name;
+
+        // npm v7+: derive name from path if missing
+        if (!name && pkgPath.startsWith("node_modules/")) {
+            name = pkgPath.replace(/^node_modules\//, "");
         }
+
+        if (!name) continue;
+
+        out.push({
+            name,
+            version: info.version
+        });
     }
 
     return out;
