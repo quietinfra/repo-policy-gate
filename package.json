@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nnoribeiro/repo-policy-gate.git"
+    "url": "git+https://github.com/quietinfra/repo-policy-gate.git"
   },
   "keywords": [
     "github-action",
@@ -20,9 +20,9 @@
   "author": "nnoribeiro",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/nnoribeiro/repo-policy-gate/issues"
+    "url": "https://github.com/quietinfra/repo-policy-gate/issues"
   },
-  "homepage": "https://github.com/nnoribeiro/repo-policy-gate#readme",
+  "homepage": "https://github.com/quietinfra/repo-policy-gate#readme",
   "dependencies": {
     "@actions/core": "^2.0.2",
     "@actions/github": "^7.0.0",

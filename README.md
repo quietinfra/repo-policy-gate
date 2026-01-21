@@ -35,7 +35,7 @@ jobs:
       pull-requests: write
     steps:
       - uses: actions/checkout@v4
-      - uses: nnoribeiro/repo-policy-gate@v1
+      - uses: quietinfra/repo-policy-gate@v1
 ```
 
 That’s it. The action will look for a ```.repo-policy.yml``` file at the repo root.

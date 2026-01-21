@@ -1,6 +1,6 @@
 name: Repo Policy Gate
 description: Enforce lightweight repo policies on pull requests via .repo-policy.yml
-author: nnoribeiro
+author: quietinfra
 branding:
   icon: shield
   color: blue
