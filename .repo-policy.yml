@@ -1,18 +1,26 @@
-fail_on: error   # "error" (default) or "warn" (strict mode)
+# Fail the check if violations at or above this severity exist.
+# Allowed values: "error" (default) or "warn"
+fail_on: error
 
+# Optional per-rule severity overrides.
+# Useful for gradual adoption.
 severity_overrides:
   required_files: warn
+  dependency_denylist: error
   pr_title_regex: error
 
 pull_request:
+  # JavaScript RegExp (without / /)
   title_regex: "^(feat|fix|chore|docs|refactor|test|ci):"
 
 repo:
+  # Files that must exist at repo root
   required_files:
     - LICENSE
     - SECURITY.md
     - CODEOWNERS
 
 dependencies:
+  # Disallowed dependencies (exact match for now)
   deny:
     - left-pad
